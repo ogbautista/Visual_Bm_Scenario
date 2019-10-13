@@ -3,9 +3,9 @@
 This scritp takes the .movements and .params output files from a BonnMotion mobility scenario and show it using matplotlib
 
 Tested in python 3.6, just execute
-<!-- -->
+```{r}
 python3 visBmScenario.py
-
+```
 and input the scenario name when prompted. 
 
 ### Options
