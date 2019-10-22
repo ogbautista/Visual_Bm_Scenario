@@ -131,6 +131,11 @@ if scn3D:
     zlim = calculateZlim(figParams['x'], figParams['y'], figParams['z'])
     ax.set_zlim(0, zlim)
     ax.set_zlabel('z-axis')
+else:
+    ax.grid()
+    ax.set_axisbelow(True)
+    ax.minorticks_on()
+    ax.grid(which='major', linewidth=0.4)
 if 'model' in figParams:
     ax.title.set_text(f"{scnName} ({figParams['model']})")
 else:
