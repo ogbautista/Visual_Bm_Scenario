@@ -151,3 +151,4 @@ anim = animation.FuncAnimation(fig, update, frames=locationFrame, interval=inter
 # anim.save(f"{scnName}.gif", writer='ffmpeg', fps=20, dpi=80)
 # anim.save(f"{scnName}.gif", writer=writer)
 plt.show()
+print('')
