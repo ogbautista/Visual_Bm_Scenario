@@ -9,7 +9,8 @@ python3 visBmScenario.py [-l] [scenario]
 if scenario is not specified, input the scenario name when prompted. 
 
 ### Options
--l	show node labels (node numbers)
+[-l]	show node labels (node numbers)
+
 Upcoming:
 - Accept cmd line parameters to modify the real time frame interval and the visualization speed
 - save command to save to a gif file instead of showing in the display
