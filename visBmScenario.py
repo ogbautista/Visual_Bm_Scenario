@@ -19,6 +19,7 @@ from my_utils.netSimUtils import getPlotMargins, calculateFigDimensions, calcula
 
 'GLOBAL VARIABLES'
 interval = 0.5
+currentFT = 0.0
 scn3D = None
 
 'DEFINITION OF FUNCTIONS'
@@ -83,8 +84,11 @@ def locationGenerator(times, locations, interval):
 
 # Function to plot a frame containing nodes in the figure
 def update(coordinates):
-    global counter, currentSet
+    global currentFT, currentSet
+
     currentSet.remove()
+    ax.set_xlabel("x-axis | time:{:7.2f}s".format(currentFT))
+    currentFT+= interval
     if scn3D:
         currentSet = ax.scatter(coordinates[0], coordinates[1], coordinates[2], s= 10, c = 'b')
     else:
