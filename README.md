@@ -6,11 +6,12 @@ Tested in python 3.6, just execute
 ```{r}
 python3 visBmScenario.py [-l] [scenario]
 ```
-if scenario is not specified, input the scenario name when prompted. 
+if scenario is not specified, the program will prompt to input a scenario name. 
 
 ### Options
+`
 [-l]	show node labels (node numbers)
-
+`
 Upcoming:
 - Accept cmd line parameters to modify the real time frame interval and the visualization speed
 - save command to save to a gif file instead of showing in the display
