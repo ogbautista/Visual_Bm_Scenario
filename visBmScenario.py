@@ -10,7 +10,7 @@
 *
 * AUTHOR: Oscar Bautista <obaut004@fiu.edu>
 '''
-import math
+import math, sys
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D
@@ -20,7 +20,9 @@ from my_utils.netSimUtils import getPlotMargins, calculateFigDimensions, calcula
 'GLOBAL VARIABLES'
 interval = 0.5
 currentFT = 0.0
+scnName = None
 scn3D = None
+drawLabel = False
 
 'DEFINITION OF FUNCTIONS'
 # Calculates the velocity vector of a node given an initial and final locations and corresponding times
@@ -83,16 +85,32 @@ def locationGenerator(times, locations, interval):
         currentTime += interval
 
 # Function to plot a frame containing nodes in the figure
-def update(coordinates):
-    global currentFT, currentSet
-
+def update(loctns):
+    global currentFT, currentSet, labelList
     currentSet.remove()
     ax.set_xlabel("x-axis | time:{:7.2f}s".format(currentFT))
-    currentFT+= interval
     if scn3D:
-        currentSet = ax.scatter(coordinates[0], coordinates[1], coordinates[2], s= 10, c = 'b')
+        currentSet = ax.scatter(loctns[0], loctns[1], loctns[2], s= 10, c = 'b')
+        if drawLabel:
+            if currentFT == 0:
+                for i in range (len (loctns[0])):
+                    labelList.append(ax.text(loctns[0][i]+5, loctns[1][i]+5, loctns[2][i], '%s' % (str(i)), zdir='x', size=8, color='k'))
+            else:
+                for i in range (len (loctns[0])):
+                    labelList[i].set_x(loctns[0][i]+5)
+                    labelList[i].set_y(loctns[1][i]+5)
+                    labelList[i].set_3d_properties(z=loctns[2][i], zdir='x')
     else:
-        currentSet = ax.scatter(coordinates[0], coordinates[1], s= 10, c = 'b')
+        currentSet = ax.scatter(loctns[0], loctns[1], s= 10, c = 'b')
+        if drawLabel:
+            if currentFT == 0:
+                for i in range (len (loctns[0])):
+                    labelList.append(ax.text(loctns[0][i]+5, loctns[1][i]+5, '%s' % (str(i)), size=8, color='k'))
+            else:
+                for i in range (len (loctns[0])):
+                    labelList[i].set_x(loctns[0][i]+5)
+                    labelList[i].set_y(loctns[1][i]+5)
+    currentFT+= interval
 
 'MAIN CODE BODY STARTS HERE'
 print("")
@@ -100,7 +118,15 @@ print("\t****************************************************************")
 print("\t*              BonnMotion Scenario Visualization               *")
 print("\t****************************************************************\n")
 
-scnName = input("Scenario name: ")
+if len(sys.argv) > 1:
+    for arg in sys.argv[1:]:
+        if arg.startswith('-') and arg[1:] == 'l':
+            drawLabel = True
+            print("show nodes' labels")
+        else:
+            scnName = arg
+if scnName is None:
+    scnName = input("Scenario name: ")
 # Read the BonnMotion scenario file and returns times and locations lists
 times, locations = fRead.read_bmScenario(scnName + ".movements")
 figParams = fRead.read_bmParams(scnName + ".params")
@@ -147,6 +173,7 @@ else:
 
 # Global variable initialized with proper object type:
 currentSet = ax.scatter(0,0)
+labelList = []
 # print(plt.rcParams)
 locationFrame = locationGenerator(times, locations, interval)
 # The matplotlib animation function:
