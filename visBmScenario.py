@@ -29,18 +29,19 @@ drawLabel = False
 def calculateNodeVelocity(nodeTimes, nodeLocations, nVelocity):
     nVelocity.clear()
     if len(nodeTimes) == 1:
-        nVelocity.extend([0,0])
-        if scn3D:
-            nVelocity.append(0)
+        nVelocity.extend([0, 0, 0] if scn3D else [0, 0])
     else:
-        timeSpan = nodeTimes[1] - nodeTimes[0]
-        xVel = (nodeLocations[1][0] - nodeLocations[0][0])/timeSpan
-        nVelocity.append(xVel)
-        yVel = (nodeLocations[1][1] - nodeLocations[0][1])/timeSpan
-        nVelocity.append(yVel)
-        if scn3D:
-            zVel = (nodeLocations[1][2] - nodeLocations[0][2])/timeSpan
-            nVelocity.append (zVel)
+        try:
+            timeSpan = nodeTimes[1] - nodeTimes[0]
+            xVel = (nodeLocations[1][0] - nodeLocations[0][0])/timeSpan
+            nVelocity.append(xVel)
+            yVel = (nodeLocations[1][1] - nodeLocations[0][1])/timeSpan
+            nVelocity.append(yVel)
+            if scn3D:
+                zVel = (nodeLocations[1][2] - nodeLocations[0][2])/timeSpan
+                nVelocity.append (zVel)
+        except ZeroDivisionError:
+            nVelocity.extend([0, 0, 0] if scn3D else [0, 0])
 
 # Definition of Generator Function, provides node locations every 'interval' given the times and locationss vector
 def locationGenerator(times, locations, interval):
