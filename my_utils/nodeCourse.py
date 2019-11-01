@@ -1,4 +1,4 @@
-class NodeMobility:
+class NodeCourse:
     def __init__ (self, times, locations):
         self.__times = times
         self.__locations = locations
