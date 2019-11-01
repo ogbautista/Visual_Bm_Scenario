@@ -66,11 +66,14 @@ def locationGenerator(times, locations, interval):
                 if scn3D:
                     Z.append(nodeLocations[0][2])
                 continue
-            if currentTime > nodeTimes[1]:
-                # Use del to modify the same list that will update the times and locations variables
+            while currentTime >= nodeTimes[1]:
+                # Use 'del' to modify the same list that will update the times and locations variables
                 del nodeTimes[0]
                 del nodeLocations[0]
-                calculateNodeVelocity(nodeTimes, nodeLocations, nVelocity)
+                if (len(nodeTimes) == 1) or (currentTime < nodeTimes[1]):
+                    calculateNodeVelocity(nodeTimes, nodeLocations, nVelocity)
+                if len(nodeTimes) == 1:
+                    break
             t = currentTime - nodeTimes[0]
             x = nodeLocations[0][0] + nVelocity[0]*t
             y = nodeLocations[0][1] + nVelocity[1]*t
