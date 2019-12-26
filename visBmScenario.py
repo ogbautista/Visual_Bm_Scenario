@@ -118,9 +118,7 @@ def update(loctns):
 
 'MAIN CODE BODY STARTS HERE'
 print("")
-# print("\t****************************************************************")
 print("\t\t*****  BonnMotion Scenario Visualization  *****\n")
-# print("\t****************************************************************\n")
 
 if len(sys.argv) > 1:
     for arg in sys.argv[1:]:
